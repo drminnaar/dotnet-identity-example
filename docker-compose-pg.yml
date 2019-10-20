@@ -1,0 +1,31 @@
+version: '3'
+services:
+   pg-identity:
+      container_name: pg-identity
+      image: postgres
+      restart: always
+      environment:
+         - POSTGRES_USER=postgres
+         - POSTGRES_PASSWORD=password
+         - POSTGRES_DB=postgres
+      ports:
+         - 5432:5432
+      networks:
+            identity-net:
+                ipv4_address: 172.22.0.5
+   pg-identity-admin:
+      container_name: pg-identity-admin
+      image: dpage/pgadmin4
+      restart: always
+      environment:
+         - PGADMIN_DEFAULT_EMAIL=admin@identitydb.com
+         - PGADMIN_DEFAULT_PASSWORD=password
+      ports:
+         - 8080:80
+      networks:
+         - identity-net
+networks:
+   identity-net:
+      ipam:
+         config:
+            - subnet: 172.22.0.0/24
