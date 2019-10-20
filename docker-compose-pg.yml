@@ -11,7 +11,7 @@ services:
       ports:
          - 5432:5432
       networks:
-            identity-net:
+            identity-pg-net:
                 ipv4_address: 172.22.0.5
    pg-identity-admin:
       container_name: pg-identity-admin
@@ -23,9 +23,9 @@ services:
       ports:
          - 8080:80
       networks:
-         - identity-net
+         - identity-pg-net
 networks:
-   identity-net:
+   identity-pg-net:
       ipam:
          config:
             - subnet: 172.22.0.0/24

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Database.Sqlite", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Database.Postgres", "Identity.Database.Postgres\Identity.Database.Postgres.csproj", "{1905B91F-1985-4EBF-9A26-14DCE7D2A263}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Database.Mssql", "Identity.Database.Mssql\Identity.Database.Mssql.csproj", "{8CD4E4B4-2259-4837-9031-0CA737DB85FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{1905B91F-1985-4EBF-9A26-14DCE7D2A263}.Release|x64.Build.0 = Release|Any CPU
 		{1905B91F-1985-4EBF-9A26-14DCE7D2A263}.Release|x86.ActiveCfg = Release|Any CPU
 		{1905B91F-1985-4EBF-9A26-14DCE7D2A263}.Release|x86.Build.0 = Release|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Debug|x64.Build.0 = Debug|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Debug|x86.Build.0 = Debug|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Release|x64.ActiveCfg = Release|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Release|x64.Build.0 = Release|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Release|x86.ActiveCfg = Release|Any CPU
+		{8CD4E4B4-2259-4837-9031-0CA737DB85FD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
