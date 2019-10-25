@@ -8,6 +8,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Identity.Data\Identity.Data.csproj" />

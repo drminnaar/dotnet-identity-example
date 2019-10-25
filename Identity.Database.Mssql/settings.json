@@ -1,0 +1,5 @@
+{
+    "ConnectionStrings": {
+        "default": "server=localhost;database=identity;user id=sa;password=P@ssword123!"
+    }
+}

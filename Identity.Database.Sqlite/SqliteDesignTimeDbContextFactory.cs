@@ -1,7 +1,10 @@
 using System;
+using System.IO;
 using Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.Database.Sqlite
 {
@@ -9,11 +12,16 @@ namespace Identity.Database.Sqlite
     {
         public AppIdentityDbContext CreateDbContext(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("settings.json")
+                .Build();
+                            
             var optionsBuilder = new DbContextOptionsBuilder<AppIdentityDbContext>();
             optionsBuilder.EnableDetailedErrors();
             optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseSqlite(
-                "DataSource=/home/dmin/data/identity/identity.db",
+                configuration.GetConnectionString("default"),
                 options => options.MigrationsAssembly(this.GetType().Assembly.FullName));
             
             return new AppIdentityDbContext(optionsBuilder.Options);

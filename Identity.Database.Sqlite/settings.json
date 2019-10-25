@@ -1,0 +1,5 @@
+{
+    "ConnectionStrings": {
+        "default": "DataSource=c:\\users\\drmin\\projects\\identity-dotnetcore-3\\data\\identity.db"
+    }
+}
