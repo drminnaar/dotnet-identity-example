@@ -46,13 +46,22 @@ dotnet-ef migrations add --startup-project .\Identity.Database.Sqlite CreateInit
 Write-Host "Created initial Sqlite Identity database migration"
 
 Set-ConsoleForegroundColor DarkMagenta | Out-Null
-
 Write-Host "`r`nStarting Sqlite Identity database migrations"
 dotnet-ef database update --startup-project .\Identity.Database.Sqlite
 Write-Host "Completed Sqlite Identity database migrations"
 
-Set-ConsoleForegroundColor Green | Out-Null
+# Seed Identity database
+Set-ConsoleForegroundColor DarkYellow | Out-Null
+Write-Host "`r`nSeeding Identity Sqlite database"
+Set-Location ./Identity.Database.Seeder
+# The following command runs seeder by specifying 1 argument the indicates
+# the name of the connection string in the settings.json file
+dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_Sqlite"
+Set-Location ..
+Write-Host "Completed seeding Identity Sqlite database"
 
+# Complete script
+Set-ConsoleForegroundColor Green | Out-Null
 Write-Host "`r`nScript completed! You can find the Sqlite database file located at '$($sqliteDbPath)'"
 Write-Host "`r`n"
 

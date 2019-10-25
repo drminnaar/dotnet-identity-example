@@ -48,8 +48,18 @@ Write-Host "`r`nStarting MsSql Identity database migrations"
 dotnet-ef database update --startup-project .\Identity.Database.Mssql
 Write-Host "Completed MsSql Identity database migrations"
 
-Set-ConsoleForegroundColor Green | Out-Null
+# Seed Identity database
+Set-ConsoleForegroundColor DarkYellow | Out-Null
+Write-Host "`r`nSeeding Identity Mssql database"
+Set-Location ./Identity.Database.Seeder
+# The following command runs seeder by specifying 1 argument the indicates
+# the name of the connection string in the settings.json file
+dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_Mssql"
+Set-Location ..
+Write-Host "Completed seeding Identity Mssql database"
 
+# Complete script
+Set-ConsoleForegroundColor Green | Out-Null
 Write-Host "`r`nScript completed!"
 Write-Host "Connect to MsSql Identity database using the following details (as per 'docker-compose-mssql.yml'):"
 Write-Host "  - server: localhost (native client)"

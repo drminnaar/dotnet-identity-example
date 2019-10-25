@@ -48,6 +48,17 @@ Write-Host "`r`nStarting Postgres Identity database migrations"
 dotnet-ef database update --startup-project .\Identity.Database.Postgres
 Write-Host "Completed Postgres Identity database migrations"
 
+# Seed Identity database
+Set-ConsoleForegroundColor DarkYellow | Out-Null
+Write-Host "`r`nSeeding Identity Postgres database"
+Set-Location ./Identity.Database.Seeder
+# The following command runs seeder by specifying 1 argument the indicates
+# the name of the connection string in the settings.json file
+dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_Postgres"
+Set-Location ..
+Write-Host "Completed seeding Identity Postgres database"
+
+# Complete script
 Set-ConsoleForegroundColor Green | Out-Null
 
 Write-Host "`r`nScript completed!"
