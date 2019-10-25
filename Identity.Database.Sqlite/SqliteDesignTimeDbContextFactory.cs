@@ -1,10 +1,8 @@
-using System;
 using System.IO;
 using Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.Database.Sqlite
 {
@@ -16,14 +14,14 @@ namespace Identity.Database.Sqlite
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("settings.json")
                 .Build();
-                            
+
             var optionsBuilder = new DbContextOptionsBuilder<AppIdentityDbContext>();
             optionsBuilder.EnableDetailedErrors();
             optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseSqlite(
                 configuration.GetConnectionString("default"),
                 options => options.MigrationsAssembly(this.GetType().Assembly.FullName));
-            
+
             return new AppIdentityDbContext(optionsBuilder.Options);
         }
     }

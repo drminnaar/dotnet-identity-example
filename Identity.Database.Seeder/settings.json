@@ -1,11 +1,11 @@
 {
     "ConnectionStrings": {
-        "Identity_Sqlite": "DataSource=c:\\users\\drmin\\projects\\identity-dotnetcore-3\\data\\identity.db",
+        "Identity_Sqlite": "DataSource=../Identity.Database.Sqlite/identity.db",
         "Identity_Postgres": "server=localhost;database=identity;port=5432;user id=postgres;password=password",
         "Identity_Mssql": "server=localhost;database=identity;user id=sa;password=P@ssword123!"
     },
     "SeederSettings": {
         "DefaultUserPassword": "P@ssword123!",
-        "AppUserDataJsonFilePath": ".\\SeedFiles\\app_users.json"
+        "AppUserDataJsonFilePath": "./SeedFiles/app_users.json"
     }
 }
