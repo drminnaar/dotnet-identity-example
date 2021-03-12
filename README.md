@@ -106,16 +106,16 @@ The following software is required to be installed on your system:
 
 Follow the following steps to get development environment running.
 
-1. Clone 'identity-dotnetcore-3' repository from GitHub
+1. Clone 'dotnet-identity-example' repository from GitHub
 
    ```bash
-   git clone https://github.com/drminnaar/identity-dotnetcore-3.git
+   git clone https://github.com/drminnaar/dotnet-identity-example.git
    ```
 
    _or using ssh_
 
    ```bash
-   git clone git@github.com:drminnaar/identity-dotnetcore-3.git
+   git clone git@github.com:drminnaar/dotnet-identity-example.git
    ```
 
 ### Run
