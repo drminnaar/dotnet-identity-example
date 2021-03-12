@@ -1,13 +1,11 @@
 ﻿using System;
-using System.IO;
+using Identity.Data;
+using Identity.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging;
-using Identity.Data;
-using Identity.Data.Models;
 
 namespace Identity.Database.Seeder
 {
@@ -30,52 +28,43 @@ namespace Identity.Database.Seeder
             }
 
             var services = new ServiceCollection();
-
-            services.AddLogging(configure => configure.AddConsole());
-
-            var seederSettings = _configuration.GetSeederSettings();
-
-            services.AddSingleton<SeederSettings>(seederSettings);
-
-            services.AddDbContextPool<AppIdentityDbContext>(optionsBuilder =>
+            services.AddLogging(options => options.AddConsole());
+            services.AddDbContextPool<AppIdentityDbContext>(options =>
             {
-                optionsBuilder.EnableDetailedErrors();
-                optionsBuilder.EnableSensitiveDataLogging();
+                options.EnableDetailedErrors();
+                options.EnableSensitiveDataLogging();
 
                 connectionStringName = connectionStringName.Trim().ToLower();
                 const string SqliteConnectionString = "identity_sqlite";
                 const string PostgresConnectionString = "identity_postgres";
                 const string MssqlConnectionString = "identity_mssql";
 
-                if (connectionStringName == SqliteConnectionString)
+                switch (connectionStringName)
                 {
-                    optionsBuilder.UseSqlite(_configuration.GetConnectionString(SqliteConnectionString));
-                }
-                else if (connectionStringName == PostgresConnectionString)
-                {
-                    optionsBuilder.UseNpgsql(_configuration.GetConnectionString(PostgresConnectionString));
-                }
-                else if (connectionStringName == MssqlConnectionString)
-                {
-                    optionsBuilder.UseSqlServer(_configuration.GetConnectionString(MssqlConnectionString));
-                }
-                else
-                {
-                    throw new NotSupportedException($"The specified connectionString name '{connectionStringName}' is not supported");
+                    case (SqliteConnectionString):
+                        options.UseSqlite(_configuration.GetConnectionString(SqliteConnectionString));
+                        break;
+                    case (PostgresConnectionString):
+                        options.UseNpgsql(_configuration.GetConnectionString(PostgresConnectionString));
+                        break;
+                    case (MssqlConnectionString):
+                        options.UseSqlServer(_configuration.GetConnectionString(MssqlConnectionString));
+                        break;
+                    default:
+                        throw new NotSupportedException($"The specified connectionString name '{connectionStringName}' is not supported");
                 }
             });
-
             services
                 .AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
-
+            services.AddSingleton(_configuration.GetSeederSettings());
             services.AddSingleton<JsonFileParser>();
-
-            services.AddSingleton<AppUserDataSeeder>(provider =>
+            services.AddSingleton(provider =>
             {
                 var dbContext = provider.GetRequiredService<AppIdentityDbContext>();
                 var userManager = provider.GetRequiredService<UserManager<AppUser>>();
                 var jsonFileParser = provider.GetRequiredService<JsonFileParser>();
+                var seederSettings = provider.GetRequiredService<SeederSettings>();
 
                 return new AppUserDataSeeder(
                     dbContext,
@@ -84,7 +73,6 @@ namespace Identity.Database.Seeder
                     seederSettings.DefaultUserPassword,
                     seederSettings.AppUserDataJsonFilePath);
             });
-
             services.AddTransient<SeederManager>();
 
             return services;

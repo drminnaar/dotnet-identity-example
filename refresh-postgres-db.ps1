@@ -13,7 +13,7 @@ $postgresProjectPath = "$($projectPath)\Identity.Database.Postgres\Migrations"
 # Run Postgres in Docker container
 Set-ConsoleForegroundColor DarkCyan | Out-Null
 Write-Host "`r`nSetup Identity Postgres database in Docker container started"
-docker-compose -f docker-compose-pg.yml down
+docker-compose -f docker-compose-pg.yml down --volumes
 docker-compose -f docker-compose-pg.yml up -d
 Write-Host "Completed setup of Identity Postgres database in Docker container"
 
@@ -39,13 +39,13 @@ if (Test-Path -Path $postgresProjectPath) {
 Set-ConsoleForegroundColor Magenta | Out-Null
 
 Write-Host "`r`nCreating initial Postgres Identity database migration"
-dotnet-ef migrations add --startup-project .\Identity.Database.Postgres CreateInitialIdentitySchema
+dotnet ef migrations add --startup-project .\Identity.Database.Postgres CreateInitialIdentitySchema
 Write-Host "Created initial Postgres Identity database migration"
 
 Set-ConsoleForegroundColor DarkMagenta | Out-Null
 
 Write-Host "`r`nStarting Postgres Identity database migrations"
-dotnet-ef database update --startup-project .\Identity.Database.Postgres
+dotnet ef database update --startup-project .\Identity.Database.Postgres
 Write-Host "Completed Postgres Identity database migrations"
 
 # Seed Identity database
@@ -54,7 +54,7 @@ Write-Host "`r`nSeeding Identity Postgres database"
 Set-Location ./Identity.Database.Seeder
 # The following command runs seeder by specifying 1 argument the indicates
 # the name of the connection string in the settings.json file
-dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_Postgres"
+dotnet ./bin/Release/net5.0/Identity.Database.Seeder.dll "Identity_Postgres"
 Set-Location ..
 Write-Host "Completed seeding Identity Postgres database"
 
@@ -63,7 +63,7 @@ Set-ConsoleForegroundColor Green | Out-Null
 
 Write-Host "`r`nScript completed!"
 Write-Host "Connect to postgres Identity database using the following details (as per 'docker-compose-pg.yml'):"
-Write-Host "  - server: 172.22.0.5 (pgAdmin web client) or localhost (native client)"
+Write-Host "  - server: localhost"
 Write-Host "  - username: postgres"
 Write-Host "  - password: password"
 Write-Host "`r`n"

@@ -12,7 +12,7 @@ echo -e "\r\n${GREEN}Script started! Creating new Identity database using MsSql.
 
 # Run MsSql in Docker container
 echo -e "\r\n${CYAN}Setup Identity MsSql database in Docker container started"
-docker-compose -f docker-compose-mssql.yml down
+docker-compose -f docker-compose-mssql.yml down --volumes
 docker-compose -f docker-compose-mssql.yml up -d
 echo -e "Setup of Identity MsSql database in Docker container complete"
 
@@ -44,7 +44,7 @@ echo -e "\r\n${YELLOW}Seeding Identity MsSql database"
 cd ./Identity.Database.Seeder
 # The following command runs seeder by specifying 1 argument the indicates
 # the name of the connection string in the settings.json file
-dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_MsSql"
+dotnet ./bin/Release/net5.0/Identity.Database.Seeder.dll "Identity_MsSql"
 cd ..
 echo -e "Seeding Identity MsSql database completed"
 

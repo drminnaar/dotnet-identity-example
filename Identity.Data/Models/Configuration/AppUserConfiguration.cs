@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Identity.Data.Models.Configuration
@@ -10,10 +10,13 @@ namespace Identity.Data.Models.Configuration
     {
         public void Configure(EntityTypeBuilder<AppUser> entity)
         {
+            // configure table
             entity.ToTable(TableName, SchemaName);
 
+            // configure primary key
             entity.HasKey(e => e.Id).HasName(Key.PrimaryKey);
 
+            // configure properties
             entity.Property(e => e.Id).HasColumnName(Column.Id);
             entity.Property(e => e.AccessFailedCount).HasColumnName(Column.AccessFailedCount);
             entity.Property(e => e.ConcurrencyStamp).HasColumnName(Column.ConcurrencyStamp);
@@ -30,13 +33,15 @@ namespace Identity.Data.Models.Configuration
             entity.Property(e => e.TwoFactorEnabled).HasColumnName(Column.TwoFactorEnabled);
             entity.Property(e => e.UserName).HasColumnName(Column.UserName);
 
+            // configure indexes
+            entity.HasIndex(e => e.NormalizedUserName).HasDatabaseName(Index.NormalizedUserName).IsUnique();
+            entity.HasIndex(e => e.NormalizedEmail).HasDatabaseName(Index.NormalizedEmail);
+
+            // configure relationships
             entity.HasMany(e => e.Claims).WithOne().HasForeignKey(e => e.UserId).HasConstraintName(Key.ClaimIdForeignKey).IsRequired();
             entity.HasMany(e => e.Logins).WithOne().HasForeignKey(e => e.UserId).HasConstraintName(Key.LoginIdForeignKey).IsRequired();
             entity.HasMany(e => e.Tokens).WithOne().HasForeignKey(e => e.UserId).HasConstraintName(Key.TokenIdForeignKey).IsRequired();
             entity.HasMany(e => e.UserRoles).WithOne().HasForeignKey(e => e.UserId).HasConstraintName(Key.UserIdForeignKey).IsRequired();
-
-            entity.HasIndex(e => e.NormalizedUserName).HasName(Index.NormalizedUserName).IsUnique();
-            entity.HasIndex(e => e.NormalizedEmail).HasName(Index.NormalizedEmail);
         }
     }
 }

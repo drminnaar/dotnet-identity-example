@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Identity.Data.Models.Configuration
@@ -10,17 +10,22 @@ namespace Identity.Data.Models.Configuration
     {
         public void Configure(EntityTypeBuilder<AppRole> entity)
         {
+            // configure table
             entity.ToTable(TableName, SchemaName);
 
+            // configure primary key
             entity.HasKey(e => e.Id).HasName(Key.PrimaryKey);
 
+            // configure properties
             entity.Property(e => e.ConcurrencyStamp).HasColumnName(Column.ConcurrencyStamp);
             entity.Property(e => e.Id).HasColumnName(Column.Id);
             entity.Property(e => e.Name).HasColumnName(Column.Name);
             entity.Property(e => e.NormalizedName).HasColumnName(Column.NormalizedName);
 
-            entity.HasIndex(e=>e.NormalizedName).HasName(Index.NormalizedName).IsUnique();
+            // configure indexes
+            entity.HasIndex(e => e.NormalizedName).HasDatabaseName(Index.NormalizedName).IsUnique();
 
+            // configure relationships
             entity.HasMany(e => e.UserRoles).WithOne(e => e.Role).HasForeignKey(e => e.RoleId).HasConstraintName(Key.RoleIdForeignKey);
         }
     }

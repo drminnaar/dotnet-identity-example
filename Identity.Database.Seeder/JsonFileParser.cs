@@ -34,11 +34,13 @@ namespace Identity.Database.Seeder
                         $"The specified file '{jsonFilePath}' contains no data.");
                 }
 
-                return JsonSerializer.Deserialize<T[]>(content, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                return JsonSerializer
+                    .Deserialize<T[]>(content, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    })
+                    ?? Array.Empty<T>();
             }
 
             return LoadDataFromFileAsync();

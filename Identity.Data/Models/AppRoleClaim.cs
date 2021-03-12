@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Identity;
 
 namespace Identity.Data.Models
 {
     public class AppRoleClaim : IdentityRoleClaim<Guid>
     {
-        public virtual AppRole Role { get; set; }
+        public virtual AppRole Role { get; set; } = null!;
     }
 }

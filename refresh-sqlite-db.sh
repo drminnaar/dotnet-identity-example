@@ -35,17 +35,17 @@ fi
 
 # Create and run migrations
 echo -e "\r\n${LIGHT_MAGENTA}Adding Identity migrations ..."
-dotnet-ef migrations add --startup-project ./Identity.Database.Sqlite CreateInitialIdentitySchema
+dotnet ef migrations add --startup-project ./Identity.Database.Sqlite CreateInitialIdentitySchema
 
 echo -e "\r\n${MAGENTA}Applying Identity database migrations ..."
-dotnet-ef database update --startup-project ./Identity.Database.Sqlite
+dotnet ef database update --startup-project ./Identity.Database.Sqlite
 
 # Seed Identity database
 echo -e "\r\n${YELLOW}Seeding Identity Sqlite database"
 cd ./Identity.Database.Seeder
 # The following command runs seeder by specifying 1 argument the indicates
 # the name of the connection string in the settings.json file
-dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_Sqlite"
+dotnet ./bin/Release/net5.0/Identity.Database.Seeder.dll "Identity_Sqlite"
 cd ..
 echo -e "Seeding Identity Sqlite database completed"
 

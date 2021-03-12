@@ -37,12 +37,12 @@ Write-Host "Completed building solution"
 # Create Sqlite migrations and update database
 Set-ConsoleForegroundColor Magenta | Out-Null
 Write-Host "`r`nCreating initial Sqlite Identity database migration"
-dotnet-ef migrations add --startup-project ./Identity.Database.Sqlite CreateInitialIdentitySchema
+dotnet ef migrations add --startup-project ./Identity.Database.Sqlite CreateInitialIdentitySchema
 Write-Host "Created initial Sqlite Identity database migration"
 
 Set-ConsoleForegroundColor DarkMagenta | Out-Null
 Write-Host "`r`nStarting Sqlite Identity database migrations"
-dotnet-ef database update --startup-project ./Identity.Database.Sqlite
+dotnet ef database update --startup-project ./Identity.Database.Sqlite
 Write-Host "Completed Sqlite Identity database migrations"
 
 # Seed Identity database
@@ -51,7 +51,7 @@ Write-Host "`r`nSeeding Identity Sqlite database"
 Set-Location ./Identity.Database.Seeder
 # The following command runs seeder by specifying 1 argument the indicates
 # the name of the connection string in the settings.json file
-dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_Sqlite"
+dotnet ./bin/Release/net5.0/Identity.Database.Seeder.dll "Identity_Sqlite"
 Set-Location ..
 Write-Host "Completed seeding Identity Sqlite database"
 

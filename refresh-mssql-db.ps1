@@ -13,7 +13,7 @@ $mssqlProjectPath = "$($projectPath)\Identity.Database.MsSql\Migrations"
 # Run MsSql in Docker container
 Set-ConsoleForegroundColor DarkCyan | Out-Null
 Write-Host "`r`nSetup Identity MsSql database in Docker container started"
-docker-compose -f docker-compose-mssql.yml down
+docker-compose -f docker-compose-mssql.yml down --volumes
 docker-compose -f docker-compose-mssql.yml up -d
 Write-Host "Completed setup of Identity MsSql database in Docker container"
 
@@ -39,13 +39,13 @@ if (Test-Path -Path $mssqlProjectPath) {
 Set-ConsoleForegroundColor Magenta | Out-Null
 
 Write-Host "`r`nCreating initial MsSql Identity database migration"
-dotnet-ef migrations add --startup-project .\Identity.Database.Mssql CreateInitialIdentitySchema
+dotnet ef migrations add --startup-project .\Identity.Database.Mssql CreateInitialIdentitySchema
 Write-Host "Created initial MsSql Identity database migration"
 
 Set-ConsoleForegroundColor DarkMagenta | Out-Null
 
 Write-Host "`r`nStarting MsSql Identity database migrations"
-dotnet-ef database update --startup-project .\Identity.Database.Mssql
+dotnet ef database update --startup-project .\Identity.Database.Mssql
 Write-Host "Completed MsSql Identity database migrations"
 
 # Seed Identity database
@@ -54,7 +54,7 @@ Write-Host "`r`nSeeding Identity Mssql database"
 Set-Location ./Identity.Database.Seeder
 # The following command runs seeder by specifying 1 argument the indicates
 # the name of the connection string in the settings.json file
-dotnet ./bin/Release/netcoreapp3.0/Identity.Database.Seeder.dll "Identity_Mssql"
+dotnet ./bin/Release/net5.0/Identity.Database.Seeder.dll "Identity_Mssql"
 Set-Location ..
 Write-Host "Completed seeding Identity Mssql database"
 
@@ -62,7 +62,7 @@ Write-Host "Completed seeding Identity Mssql database"
 Set-ConsoleForegroundColor Green | Out-Null
 Write-Host "`r`nScript completed!"
 Write-Host "Connect to MsSql Identity database using the following details (as per 'docker-compose-mssql.yml'):"
-Write-Host "  - server: localhost (native client)"
+Write-Host "  - server: localhost"
 Write-Host "  - username: sa"
 Write-Host "  - password: P@ssword123!"
 Write-Host "`r`n"

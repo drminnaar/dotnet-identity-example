@@ -1,9 +1,9 @@
-version: '3'
+version: '3.9'
 services:
-   mssql-identity:
-      container_name: mssql-identity
-      image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-      restart: always
+   identity_db_mssql:
+      container_name: identity_db_mssql
+      image: mcr.microsoft.com/mssql/server:2019-CU9-ubuntu-18.04
+      restart: unless-stopped
       environment:
          - SA_PASSWORD=P@ssword123!
          - ACCEPT_EULA=y
@@ -11,10 +11,7 @@ services:
       ports:
          - 1433:1433
       networks:
-            identity-mssql-net:
-                ipv4_address: 172.19.0.5
+         - default
 networks:
-   identity-mssql-net:
-      ipam:
-         config:
-            - subnet: 172.19.0.0/24
+   default:
+      name: identity_net_mssql

@@ -1,32 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0"/>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.1"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Identity.Data\Identity.Data.csproj"/>
+    <ProjectReference Include="..\Identity.Data\Identity.Data.csproj" />
   </ItemGroup>
+
   <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
     <Copy SourceFiles="./SeedFiles/app_users.json" DestinationFolder="$(OutDir)/SeedFiles" />
-    <Copy SourceFiles="./settings.json" DestinationFolder="$(OutDir)"/>
+    <Copy SourceFiles="./settings.json" DestinationFolder="$(OutDir)" />
   </Target>
+
   <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
-    <Copy SourceFiles="./SeedFiles/app_users.json" DestinationFolder="$(PublishDir)/SeedFiles"/>
+    <Copy SourceFiles="./SeedFiles/app_users.json" DestinationFolder="$(PublishDir)/SeedFiles" />
     <Copy SourceFiles="./settings.json" DestinationFolder="$(PublishDir)" />
   </Target>
 </Project>
