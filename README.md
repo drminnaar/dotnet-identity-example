@@ -1,12 +1,13 @@
-# Identity on [Asp.Net Core]
+# ASP.NET Identity
 
 Shows how to use, customise, and configure Identity on [Asp.Net Core] with different backend stores (postgresql, mssql, sqlite).
 
-Although the primary purpose of this project is to show how to setup Identity for [Asp.Net Core], one can also use this project as an example for the following tasks:
+---
 
-- Setting up Docker and Docker-Compose to host Postgres and MsSql databases
-- Writing cross-platform powershell scripts to setup projects
-- Writing bash scripts to setup projects
+## Updates
+
+- 2021/03 - Updated to .NET 5
+- 2021/03 - Added sample API project that demonstrates how to use ASP.NET Identity and Jwt Bearer Authentication
 
 ---
 
@@ -154,6 +155,26 @@ All scripts (powershell and bash scripts) are located at the root of the project
   # Setup Identity for Asp.Net Core using MsSql database
   .\refresh-mssql-db.sh
   ```
+
+---
+
+## API Project
+
+The API project demonstrated how to configure an ASP.NET API to use ASP.NET Identity and JWT Bearer authentication
+
+The highlights of this project are as follows:
+
+- Configure ASP.NET Identity to use the `Identity.Data` project
+- Configure Authentication
+- Configure Swagger to use JWT Bearer authentication
+- Use Postgres 12 database hosted inside a Docker container to store all Identity data. It's possible to use MSSQL or Sqlite by changing connection strings
+- Create API endpoints for the following resources
+  - Tokens - Allows one to provide login credentials to obtain a JWT
+  - Users - Provides access to user data using JWT authentication
+  - Signups - Allows one to signup for an account
+  - Events - Provides access to random events to authenticated users
+
+![identity-swagger](https://user-images.githubusercontent.com/33935506/111025521-8d1e8a00-8449-11eb-88d3-84b67932224c.png)
 
 ---
 

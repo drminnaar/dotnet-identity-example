@@ -51,7 +51,7 @@ namespace Identity.Database.Seeder
 
             var users = await _seedFileParser
                 .LoadDataFromFileAsync<AppUser>(_appUserJsonFilePath)
-                ?? new AppUser[0];
+                ?? Array.Empty<AppUser>();
 
             if (!users.Any())
                 return;

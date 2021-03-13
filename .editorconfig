@@ -205,3 +205,18 @@ csharp_space_between_square_brackets = false
 csharp_prefer_braces = true:silent
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none
+# CA1304: Specify CultureInfo
+dotnet_diagnostic.CA1304.severity = none
+# CA1307: Specify CultureInfo
+dotnet_diagnostic.CA1307.severity = none
+# CA1710: Identifiers should have correct suffix
+dotnet_diagnostic.CA1710.severity = none
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
+# IDE1006: Missing prefix: s_
+dotnet_diagnostic.IDE1006.severity = none
