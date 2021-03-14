@@ -128,33 +128,54 @@ All scripts (powershell and bash scripts) are located at the root of the project
 
   ```powershell
   # Setup Identity for Asp.Net Core using Sqlite database
-  .\refresh-sqlite-db.ps1
+  .\sqlite-up.ps1
+
+  # Tear down Identity for Asp.Net Core using Sqlite database
+  .\sqlite-down.ps1
   
   # Setup Identity for Asp.Net Core using Postgres database
-  .\refresh-postgres-db.ps1
+  .\postgres-up.ps1
+
+  # Tear down Identity for Asp.Net Core using Postgres database
+  .\postgres-down.ps1
   
   # Setup Identity for Asp.Net Core using MsSql database
-  .\refresh-mssql-db.ps1
+  .\mssql-up.ps1
+
+  # Tear down Identity for Asp.Net Core using MsSql database
+  .\mssql-down.ps1
   ```
 
 - On Linux or WSL, open a terminal at the root of the project directory and type the following commands:
 
   ```bash
   # Run the following commands once to issue execute permission to bash scripts
-  chmod +x .\refresh-sqlite-db.sh
-  chmod +x .\refresh-postgres-db.sh
-  chmod +x .\refresh-mssql-db.sh
+  chmod +x .\sqlite-up.sh
+  chmod +x .\sqlite-down.sh
+  chmod +x .\postgres-up.sh
+  chmod +x .\postgres-down.sh
+  chmod +x .\mssql-up.sh
+  chmod +x .\mssql-down.sh
   ```
 
-  ```bash  
+  ```bash
   # Setup Identity for Asp.Net Core using Sqlite database  
-  .\refresh-sqlite-db.sh
+  .\sqlite-up.sh
+
+  # Tear down Identity for Asp.Net Core using Sqlite database  
+  .\sqlite-down.sh
   
   # Setup Identity for Asp.Net Core using Postgres database    
-  .\refresh-postgres-db.sh  
+  .\postgres-up.sh  
+
+  # Tear down Identity for Asp.Net Core using Postgres database    
+  .\postgres-down.sh  
   
   # Setup Identity for Asp.Net Core using MsSql database
-  .\refresh-mssql-db.sh
+  .\mssql-up.sh
+
+  # Tear down Identity for Asp.Net Core using MsSql database
+  .\mssql-down.sh
   ```
 
 ---
