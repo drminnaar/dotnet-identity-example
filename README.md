@@ -8,6 +8,7 @@ Shows how to use, customise, and configure Identity on [Asp.Net Core] with diffe
 
 - 2021/03 - Updated to .NET 5
 - 2021/03 - Added sample API project that demonstrates how to use ASP.NET Identity and Jwt Bearer Authentication
+- 2021/03 - Add support for refresh tokens on Sample API
 
 ---
 
@@ -160,7 +161,7 @@ All scripts (powershell and bash scripts) are located at the root of the project
 
 ## API Project
 
-The API project demonstrated how to configure an ASP.NET API to use ASP.NET Identity and JWT Bearer authentication
+The API project demonstrates how to configure an ASP.NET API to use ASP.NET Identity and JWT Bearer authentication.
 
 The highlights of this project are as follows:
 
@@ -174,13 +175,36 @@ The highlights of this project are as follows:
   - Signups - Allows one to signup for an account
   - Events - Provides access to random events to authenticated users
 
-![identity-swagger](https://user-images.githubusercontent.com/33935506/111025521-8d1e8a00-8449-11eb-88d3-84b67932224c.png)
+### Using The API
+
+There are 3 Ways to use the API and are listed as follows:
+
+- Visual Studio Code REST Client
+  
+  Find a list of requests defined in the folder `ApiRequests`
+
+  [Go here for more information about extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+
+  ![identity-rest-client](https://user-images.githubusercontent.com/33935506/111056151-c6a2d400-84e1-11eb-843e-cec77a04285c.png)
+
+- Swagger
+  
+  Open the Swagger documentation at https://localhost:5001/swagger/index.html
+
+  ![identity-swagger](https://user-images.githubusercontent.com/33935506/111025521-8d1e8a00-8449-11eb-88d3-84b67932224c.png)
+
+- Postman
+  
+  Find the Postman collection `Events API.postman_collection.json` at the root of solution that you can import using Postman
 
 ---
 
 ## Versioning
 
 I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/drminnaar/identity-dotnetcore-3/tags).
+
+- [Version 1.0.0](https://github.com/drminnaar/dotnet-identity-example/releases/tag/V1.0.0)
+- [Version 2.0.0](https://github.com/drminnaar/dotnet-identity-example/releases/tag/V2.0.0)
 
 ---
 

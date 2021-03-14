@@ -1,0 +1,20 @@
+@hostname = localhost
+@port = 5001
+@host = {{hostname}}:{{port}}
+@controller = users
+@accept = application/json
+@contentType = application/json
+@token = Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYmJpZXJvYWNoQGNvbXRvdXJzLmNvbSIsIm5hbWVpZCI6ImQ3Y2RlOTc5LThlYzQtNDNiNy1hNDY2LTA4ZDhlNjg5M2RmZSIsImVtYWlsIjoiYm9iYmllcm9hY2hAY29tdG91cnMuY29tIiwibmJmIjoxNjE1Njg4MTg0LCJleHAiOjE2MTU2ODgzMDQsImlhdCI6MTYxNTY4ODE4NH0.TNIkmGL7WZQx_HxeEdsu5Lhg5r4_3yfUXxATDCc9PhuXnGcXrGh1XAcPq6nrP1-kydQvjeyrR9j8ZaqL7M7ejQ
+@userid = d7cde979-8ec4-43b7-a466-08d8e6893dfe
+
+### Get Current User
+
+GET https://{{host}}/{{controller}}
+Accept: {{accept}}
+Authorization: {{token}}
+
+### Get User By Id
+
+GET https://{{host}}/{{controller}}/{{userid}}
+Accept: {{accept}}
+Authorization: {{token}}

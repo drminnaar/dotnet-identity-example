@@ -1,3 +1,5 @@
+﻿using System;
+using Api.Infrastructure.Configuration;
 using Identity.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +15,40 @@ namespace Microsoft.Extensions.DependencyInjection
             IConfiguration configuration,
             IWebHostEnvironment environment)
         {
-            services.AddDbContextPool<AppIdentityDbContext>(options =>
+            var appSettings = configuration.GetAppSettings();
+
+            if (appSettings.ConnectionStringName.ToLower() == "identity_postgres")
             {
-                options.UseNpgsql(configuration.GetConnectionString("identity"));
-                options.EnableDetailedErrors(environment.IsDevelopment());
-                options.EnableSensitiveDataLogging(environment.IsDevelopment());
-            });
+                services.AddDbContextPool<AppIdentityDbContext>(options =>
+                {
+                    options.UseNpgsql(configuration.GetConnectionString(appSettings.ConnectionStringName));
+                    options.EnableDetailedErrors(environment.IsDevelopment());
+                    options.EnableSensitiveDataLogging(environment.IsDevelopment());
+                });
+            }
+            else if (appSettings.ConnectionStringName.ToLower() == "identity_mssql")
+            {
+                services.AddDbContextPool<AppIdentityDbContext>(options =>
+                {
+                    options.UseSqlServer(configuration.GetConnectionString(appSettings.ConnectionStringName));
+                    options.EnableDetailedErrors(environment.IsDevelopment());
+                    options.EnableSensitiveDataLogging(environment.IsDevelopment());
+                });
+            }
+            else if (appSettings.ConnectionStringName.ToLower() == "identity_sqlite")
+            {
+                services.AddDbContextPool<AppIdentityDbContext>(options =>
+                {
+                    options.UseSqlite(configuration.GetConnectionString(appSettings.ConnectionStringName));
+                    options.EnableDetailedErrors(environment.IsDevelopment());
+                    options.EnableSensitiveDataLogging(environment.IsDevelopment());
+                });
+            }
+            else
+            {
+                throw new NotSupportedException(
+                    $"The specified connectionString name '{appSettings.ConnectionStringName}' is not supported");
+            }
             return services;
         }
     }

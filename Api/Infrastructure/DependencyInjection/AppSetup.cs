@@ -1,4 +1,4 @@
-using Api.Configuration;
+﻿using Api.Infrastructure.Configuration;
 using Api.Infrastructure.Security;
 using Microsoft.Extensions.Configuration;
 
@@ -11,7 +11,8 @@ namespace Microsoft.Extensions.DependencyInjection
             IConfiguration configuration)
         {
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.ConfigurationSectionName));
-            services.AddSingleton(new JwtGenerator());
+            services.Configure<JwtSecuritySettings>(configuration.GetSection(JwtSecuritySettings.ConfigurationSectionName));
+            services.AddScoped<TokenService>();
             return services;
         }
     }

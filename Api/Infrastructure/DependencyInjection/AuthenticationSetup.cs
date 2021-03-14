@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using Api.Infrastructure.Configuration;
 using Api.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        IssuerSigningKey = SigningKeyFactory.CreateSigningKey(configuration),
+                        IssuerSigningKey = CreateIssuerSigningKey(configuration),
                         ValidateAudience = false,
                         ValidateIssuer = false,
                         ValidateIssuerSigningKey = true,
@@ -33,5 +34,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
+
+        private static SecurityKey CreateIssuerSigningKey(IConfiguration configuration) =>
+            new SigningKey(configuration.GetJwtSecuritySettings().Secret).Value;
     }
 }

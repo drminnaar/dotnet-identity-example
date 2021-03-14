@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 
-namespace Api.Configuration
+namespace Api.Infrastructure.Configuration
 {
     public sealed class JwtSettings
-    {        
+    {
         public static readonly string ConfigurationSectionName = nameof(JwtSettings);
 
         public int ExpiryTimeInSeconds { get; init; }

@@ -1,0 +1,24 @@
+@hostname = localhost
+@port = 5001
+@host = {{hostname}}:{{port}}
+@controller = tokens
+@accept = application/json
+@contentType = application/json
+@token = Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYmJpZXJvYWNoQGNvbXRvdXJzLmNvbSIsIm5hbWVpZCI6ImQ3Y2RlOTc5LThlYzQtNDNiNy1hNDY2LTA4ZDhlNjg5M2RmZSIsImVtYWlsIjoiYm9iYmllcm9hY2hAY29tdG91cnMuY29tIiwibmJmIjoxNjE1Njg4NDE4LCJleHAiOjE2MTU2ODg1MzgsImlhdCI6MTYxNTY4ODQxOH0.u3a7XcLFmxsXZlVBC6wThqjE6jXzVePQZsnCVV09smop3spUuOsFz00jOo9RDFsqSPQX7zcXXoUKFzN_J4hOTA
+
+### Login and Get Token
+
+POST https://{{host}}/{{controller}}
+Accept: {{accept}}
+Content-Type: {{contentType}}
+
+{
+    "email": "bobbieroach@comtours.com",
+    "password": "P@ssword123!"
+}
+
+### Refresh Token
+
+POST https://{{host}}/{{controller}}/refresh-token
+Accept: {{accept}}
+Authorization: {{token}}

@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Net.Mime;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Api.Configuration;
 using Api.Infrastructure.Security;
 using Api.Models;
 using Identity.Data.Models;
@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Api.Controllers
 {
@@ -20,24 +18,18 @@ namespace Api.Controllers
     [ApiController]
     public sealed class TokensController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IOptions<JwtSettings> _jwtSettings;
-        private readonly JwtGenerator _jwtGenerator;
+        private readonly TokenService _tokenService;
 
         public TokensController(
-            IConfiguration configuration,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IOptions<JwtSettings> jwtSettings,
-            JwtGenerator jwtGenerator)
+            TokenService tokenService)
         {
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
-            _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
-            _jwtGenerator = jwtGenerator ?? throw new ArgumentNullException(nameof(jwtGenerator));
+            _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
 
         [HttpPost(Name = "GetToken")]
@@ -52,21 +44,41 @@ namespace Api.Controllers
             if (user is null)
                 return Unauthorized();
 
-            var signinResult = await _signInManager.PasswordSignInAsync(
+            var signinResult = await _signInManager.CheckPasswordSignInAsync(
                 user: user,
                 password: credentials.Password,
-                isPersistent: false,
                 lockoutOnFailure: false);
 
             if (!signinResult.Succeeded)
                 return Unauthorized();
 
+            await _tokenService.SetRefreshToken(user);
+
             return Ok(new TokenDto
             {
-                Token = _jwtGenerator.GenerateToken(
-                    user: user,
-                    tokenExpiryTime: _jwtSettings.Value.ExpiryTimeSpanInSeconds,
-                    securityKey: SigningKeyFactory.CreateSigningKey(_configuration))
+                Token = _tokenService.GenerateToken(user)
+            });
+        }
+
+        [HttpPost("refresh-token", Name = "RefreshToken")]
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> RefreshToken()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+
+            if (user is null)
+                return Unauthorized();
+
+            var refreshToken = await _tokenService.GenerateRefreshToken(user);
+
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                return Unauthorized();
+
+            return Ok(new TokenDto
+            {
+                Token = refreshToken
             });
         }
 

@@ -1,0 +1,17 @@
+@hostname = localhost
+@port = 5001
+@host = {{hostname}}:{{port}}
+@controller = signups
+@accept = application/json
+@contentType = application/json
+
+### Signup
+
+POST https://{{host}}/{{controller}}
+Accept: {{accept}}
+Content-Type: {{contentType}}
+
+{
+    "email": "{{$guid}}@example.com",
+    "password": "P@ssword123!"
+}

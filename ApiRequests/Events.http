@@ -1,0 +1,13 @@
+@hostname = localhost
+@port = 5001
+@host = {{hostname}}:{{port}}
+@controller = events
+@accept = application/json
+@contentType = application/json
+@token = Bearer Enter_Token_Here
+
+### Get Events
+
+GET https://{{host}}/{{controller}}
+Accept: {{accept}}
+Authorization: {{token}}
