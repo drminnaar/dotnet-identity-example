@@ -1,3 +1,5 @@
+![ef-github-cover](https://user-images.githubusercontent.com/33935506/116623157-eb6fdf80-a999-11eb-8c1a-32e602da6cd2.png)
+
 # ASP.NET Identity
 
 Shows how to use, customise, and configure Identity on [Asp.Net Core] with different backend stores (postgresql, mssql, sqlite).
